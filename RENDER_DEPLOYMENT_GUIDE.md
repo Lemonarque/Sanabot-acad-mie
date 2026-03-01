@@ -25,10 +25,8 @@ Pousse le projet avec ces nouveaux fichiers:
 1. Render Dashboard > **New** > **Blueprint**
 2. Connecte ton repo GitHub
 3. Render détecte `render.yaml`
-4. Valide la création des services:
+3. Valide la création des services:
    - `sanabot-web` (web)
-   - `sanabot-queue` (worker)
-   - `sanabot-scheduler` (cron)
    - `sanabot-db` (PostgreSQL free)
 
 ---
@@ -42,12 +40,12 @@ Dans `sanabot-web` (et idem pour worker/cron si non héritées):
 - `FEDAPAY_SECRET_KEY` = clé live
 - `FEDAPAY_WEBHOOK_SECRET` = secret webhook
 
-Déjà configuré dans `render.yaml`:
+Déjà configuré dans `render.yaml` (version free):
 
 - `APP_ENV=production`
 - `APP_DEBUG=false`
 - `DB_CONNECTION=pgsql`
-- `QUEUE_CONNECTION=database`
+- `QUEUE_CONNECTION=sync`
 - `SESSION_DRIVER=database`
 - `CACHE_STORE=database`
 
@@ -76,12 +74,21 @@ Après 1er déploiement, vérifie:
 - Login/inscription
 - Catalogue cours
 - Dashboard institution + pagination
-- Queue (emails/invitations) via `sanabot-queue`
-- Scheduler via `sanabot-scheduler`
+- Jobs exécutés en synchrone (`QUEUE_CONNECTION=sync`)
+
+## 6) Pourquoi pas de worker/cron en free
+
+Sur Render, selon l'offre et la région, les services `worker` / `cron` peuvent ne pas être disponibles en free.
+La version actuelle du blueprint est volontairement compatible free: **web + db uniquement**.
+
+Si tu passes plus tard en plan payant, on pourra réactiver:
+
+- un service `worker` pour `queue:work`
+- un service `cron` pour `schedule:run`
 
 ---
 
-## 6) Fedapay en production
+## 7) Fedapay en production
 
 Webhook à déclarer côté Fedapay:
 
@@ -96,14 +103,14 @@ Assure-toi que:
 
 ---
 
-## 7) Limites du free plan et solution recommandée
+## 8) Limites du free plan et solution recommandée
 
 - Si tu veux éviter la veille et gagner en stabilité/performance: passe `sanabot-web` en plan paid.
 - Si tu veux garder gratuit mais fiable pour les fichiers, externalise les uploads vers un bucket objet.
 
 ---
 
-## 8) Commandes utiles (Render Shell)
+## 9) Commandes utiles (Render Shell)
 
 ```bash
 php artisan optimize:clear
