@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --ink: #0f1f2b;
+    --mist: #eef7f7;
+    --teal: #35a7b2;
+    --mint: #7bbf64;
+    --slate: #4a5b6a;
+    --sky: #7ac7d3;
+    --amber: #f4c55e;
+    --rose: #f08ea3;
+    --nav-height: 4.5rem;
+}
+
+body {
+    padding-top: var(--nav-height);
+}
+
+.font-display {
+    font-family: "Fraunces", serif;
+}
+
+.font-body {
+    font-family: "Space Grotesk", system-ui, sans-serif;
+}
+
+.aurora-bg {
+    background:
+        radial-gradient(60rem 40rem at 10% -10%, rgba(53, 167, 178, 0.28), transparent 60%),
+        radial-gradient(50rem 35rem at 90% 0%, rgba(123, 191, 100, 0.25), transparent 60%),
+        radial-gradient(55rem 40rem at 50% 110%, rgba(122, 199, 211, 0.28), transparent 60%),
+        linear-gradient(180deg, #f7fbfb 0%, #eef5f4 100%);
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
+    backdrop-filter: blur(14px);
+}
+
+.chip {
+    border: 1px solid rgba(15, 23, 42, 0.15);
+    background: rgba(15, 23, 42, 0.04);
+}
+
+.nav-shell {
+    background: linear-gradient(90deg, rgba(53, 167, 178, 0.12), rgba(123, 191, 100, 0.12));
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.nav-pill {
+    border: 1px solid rgba(53, 167, 178, 0.25);
+    background: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+}
+
+.nav-link {
+    position: relative;
+    color: var(--slate);
+}
+.nav-link-active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -8px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--teal), var(--mint));
+}
+
+.pulse-ring {
+    position: relative;
+}
+.pulse-ring::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 999px;
+    border: 1px dashed rgba(56, 189, 248, 0.6);
+    animation: spin-slow 12s linear infinite;
+}
+
+.float-slow {
+    animation: float-slow 7s ease-in-out infinite;
+}
+.float-fast {
+    animation: float-fast 5s ease-in-out infinite;
+}
+
+@keyframes float-slow {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes float-fast {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-18px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes spin-slow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Couleurs et animations personnalisees pour la page d'accueil */
+.rainbow-bg {
+    background: linear-gradient(135deg, #35a7b2 0%, #7ac7d3 30%, #f0c264 60%, #7bbf64 100%);
+}
+.rainbow-text {
+    background: linear-gradient(90deg, #35a7b2, #7ac7d3, #f08ea3, #f4c55e, #7bbf64);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+.shine {
+    animation: shine 2.5s linear infinite;
+}
+@keyframes shine {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.25); }
+    100% { filter: brightness(1); }
+}
+.bubble {
+    animation: bubble 6s ease-in-out infinite alternate;
+}
+@keyframes bubble {
+    0% { transform: scale(1) translateY(0); }
+    100% { transform: scale(1.1) translateY(-20px); }
+}
+
+.ql-toolbar.ql-snow {
+    border-radius: 0.75rem 0.75rem 0 0;
+    border-color: rgba(226, 232, 240, 1);
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.ql-container.ql-snow {
+    border-radius: 0 0 0.75rem 0.75rem;
+    border-color: rgba(226, 232, 240, 1);
+    background: rgba(255, 255, 255, 0.85);
+    min-height: 240px;
+}
+
+.ql-editor {
+    min-height: 220px;
+}
+
+.plyr,
+.plyr__video-wrapper,
+.js-player,
+video,
+iframe {
+    max-width: 100%;
+}
+
+.plyr,
+video,
+iframe {
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .learner-lesson-layout {
+        display: grid;
+        grid-template-columns: 320px minmax(0, 1fr);
+        gap: 2rem;
+        align-items: start;
+    }
+
+    .learner-lesson-sidebar {
+        position: sticky;
+        top: 6rem;
+        max-height: calc(100vh - 7rem);
+        overflow-y: auto;
+    }
+}
+
+.learner-progress {
+    width: 100%;
+    height: 0.5rem;
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.learner-progress::-webkit-progress-bar {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.learner-progress::-webkit-progress-value {
+    background: linear-gradient(90deg, var(--teal), var(--mint));
+}
+
+.learner-progress::-moz-progress-bar {
+    background: linear-gradient(90deg, var(--teal), var(--mint));
+}
+
+:where(a, button, input[type="button"], input[type="submit"]).rounded-full:not(.chip) {
+    min-height: 2.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+}
+
+@layer base {
+    :where(button, input[type="button"], input[type="submit"], input[type="reset"]) {
+        min-height: 2.75rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1.25rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 150ms ease, transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease, color 150ms ease;
+    }
+
+    :where(button, input[type="button"], input[type="submit"], input[type="reset"]):focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.7);
+    }
+
+    :where(button, input[type="button"], input[type="submit"], input[type="reset"]):disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    :where(button, input[type="button"], input[type="submit"], input[type="reset"]):not(:disabled):active {
+        transform: translateY(1px);
+    }
+}

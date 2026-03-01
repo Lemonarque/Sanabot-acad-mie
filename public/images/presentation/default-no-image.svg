@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Pas d'image sélectionnée</title>
+  <desc id="desc">Image par défaut lorsqu'aucune image de présentation n'est fournie.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#E2E8F0"/>
+      <stop offset="100%" stop-color="#CBD5E1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="110" y="110" width="980" height="455" rx="24" fill="#F8FAFC" stroke="#94A3B8" stroke-width="4"/>
+  <g fill="#334155" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <text x="600" y="305" font-size="44" font-weight="700">Pas d'image sélectionnée</text>
+    <text x="600" y="355" font-size="24" font-weight="400">Ajoutez une image de présentation pour ce cours</text>
+  </g>
+</svg>
