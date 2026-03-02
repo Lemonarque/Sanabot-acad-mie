@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('enrollment_id')->constrained('enrollments')->cascadeOnDelete();
             $table->string('pdf_path')->nullable();
+            $table->uuid('verification_code')->nullable()->unique();
             $table->timestamp('issued_at')->nullable();
+            $table->string('qr_code_path')->nullable();
             $table->timestamps();
         });
     }
