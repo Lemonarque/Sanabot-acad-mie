@@ -38,4 +38,4 @@ RUN npm run build
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "php artisan package:discover --ansi; php artisan storage:link || true; php artisan migrate --force; php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
+CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-10000} -t public"]
