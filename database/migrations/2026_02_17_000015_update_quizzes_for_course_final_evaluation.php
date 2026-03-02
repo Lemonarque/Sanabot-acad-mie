@@ -67,10 +67,10 @@ return new class extends Migration
             $table->foreignId('course_id')->nullable()->after('module_id')->constrained('courses')->nullOnDelete();
         });
 
-        DB::table('quizzes as q')
-            ->join('modules as m', 'm.id', '=', 'q.module_id')
+        DB::table('quizzes')
+            ->whereNotNull('module_id')
             ->update([
-                'q.course_id' => DB::raw('m.course_id'),
+                'course_id' => DB::raw('(SELECT course_id FROM modules WHERE modules.id = quizzes.module_id)'),
             ]);
     }
 
