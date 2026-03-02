@@ -35,22 +35,28 @@ use App\Livewire\Modules\Show as ModulesShow;
 use App\Livewire\Payment\Checkout as PaymentCheckout;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CourseImageController;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Throwable;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quiz;
 use App\Models\Course;
 
 // Page d'accueil
 Route::get('/', function () {
-    $carouselCourses = Course::query()
-        ->with(['creator'])
-        ->withCount(['modules', 'enrollments'])
-        ->where('show_on_home_carousel', true)
-        ->whereIn('status', ['approved', 'validated'])
-        ->where('is_active', true)
-        ->orderByRaw('CASE WHEN home_carousel_order IS NULL THEN 1 ELSE 0 END')
-        ->orderBy('home_carousel_order')
-        ->latest()
-        ->paginate(5);
+    try {
+        $carouselCourses = Course::query()
+            ->with(['creator'])
+            ->withCount(['modules', 'enrollments'])
+            ->where('show_on_home_carousel', true)
+            ->whereIn('status', ['approved', 'validated'])
+            ->where('is_active', true)
+            ->orderByRaw('CASE WHEN home_carousel_order IS NULL THEN 1 ELSE 0 END')
+            ->orderBy('home_carousel_order')
+            ->latest()
+            ->paginate(5);
+    } catch (Throwable $th) {
+        $carouselCourses = new LengthAwarePaginator([], 0, 5);
+    }
 
     return view('welcome', [
         'carouselCourses' => $carouselCourses,
