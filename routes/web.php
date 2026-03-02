@@ -35,7 +35,6 @@ use App\Livewire\Modules\Show as ModulesShow;
 use App\Livewire\Payment\Checkout as PaymentCheckout;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CourseImageController;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Throwable;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quiz;
@@ -54,13 +53,16 @@ Route::get('/', function () {
             ->orderBy('home_carousel_order')
             ->latest()
             ->paginate(5);
+        return view('welcome', [
+            'carouselCourses' => $carouselCourses,
+        ]);
     } catch (Throwable $th) {
-        $carouselCourses = new LengthAwarePaginator([], 0, 5);
+        return response(
+            '<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sanabot Academy</title></head><body style="font-family:Arial,sans-serif;padding:24px;"><h1>Sanabot Academy</h1><p>L\'application est en cours d\'initialisation.</p><p><a href="/login">Connexion</a> · <a href="/register">Inscription</a></p></body></html>',
+            200,
+            ['Content-Type' => 'text/html; charset=UTF-8']
+        );
     }
-
-    return view('welcome', [
-        'carouselCourses' => $carouselCourses,
-    ]);
 })->name('home');
 
 Route::view('/profil', 'profile')->middleware('auth')->name('profile');
