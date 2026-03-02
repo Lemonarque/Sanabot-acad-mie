@@ -38,4 +38,4 @@ RUN npm run build
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-10000} -t public"]
+CMD ["sh", "-c", "mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache; touch storage/logs/laravel.log; php -S 0.0.0.0:${PORT:-10000} -t public"]
