@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -35,34 +34,32 @@ use App\Livewire\Modules\Show as ModulesShow;
 use App\Livewire\Payment\Checkout as PaymentCheckout;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CourseImageController;
-use Throwable;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quiz;
 use App\Models\Course;
 
 // Page d'accueil
 Route::get('/', function () {
-    try {
-        $carouselCourses = Course::query()
-            ->with(['creator'])
-            ->withCount(['modules', 'enrollments'])
-            ->where('show_on_home_carousel', true)
-            ->whereIn('status', ['approved', 'validated'])
-            ->where('is_active', true)
-            ->orderByRaw('CASE WHEN home_carousel_order IS NULL THEN 1 ELSE 0 END')
-            ->orderBy('home_carousel_order')
-            ->latest()
-            ->paginate(5);
-        return view('welcome', [
-            'carouselCourses' => $carouselCourses,
-        ]);
-    } catch (Throwable $th) {
-        return response(
+    return rescue(
+        fn () => view('welcome', [
+            'carouselCourses' => Course::query()
+                ->with(['creator'])
+                ->withCount(['modules', 'enrollments'])
+                ->where('show_on_home_carousel', true)
+                ->whereIn('status', ['approved', 'validated'])
+                ->where('is_active', true)
+                ->orderByRaw('CASE WHEN home_carousel_order IS NULL THEN 1 ELSE 0 END')
+                ->orderBy('home_carousel_order')
+                ->latest()
+                ->paginate(5),
+        ]),
+        response(
             '<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sanabot Academy</title></head><body style="font-family:Arial,sans-serif;padding:24px;"><h1>Sanabot Academy</h1><p>L\'application est en cours d\'initialisation.</p><p><a href="/login">Connexion</a> · <a href="/register">Inscription</a></p></body></html>',
             200,
             ['Content-Type' => 'text/html; charset=UTF-8']
-        );
-    }
+        ),
+        report: false
+    );
 })->name('home');
 
 Route::view('/profil', 'profile')->middleware('auth')->name('profile');
