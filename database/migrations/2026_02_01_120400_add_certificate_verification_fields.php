@@ -8,17 +8,43 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('certificates', function (Blueprint $table) {
-            $table->uuid('verification_code')->nullable()->unique();
-            $table->timestamp('issued_at')->nullable();
-            $table->string('qr_code_path')->nullable();
-        });
+        if (! Schema::hasColumn('certificates', 'verification_code')) {
+            Schema::table('certificates', function (Blueprint $table) {
+                $table->uuid('verification_code')->nullable()->unique();
+            });
+        }
+
+        if (! Schema::hasColumn('certificates', 'issued_at')) {
+            Schema::table('certificates', function (Blueprint $table) {
+                $table->timestamp('issued_at')->nullable();
+            });
+        }
+
+        if (! Schema::hasColumn('certificates', 'qr_code_path')) {
+            Schema::table('certificates', function (Blueprint $table) {
+                $table->string('qr_code_path')->nullable();
+            });
+        }
     }
 
     public function down(): void
     {
-        Schema::table('certificates', function (Blueprint $table) {
-            $table->dropColumn(['verification_code', 'issued_at', 'qr_code_path']);
-        });
+        if (Schema::hasColumn('certificates', 'verification_code')) {
+            Schema::table('certificates', function (Blueprint $table) {
+                $table->dropColumn('verification_code');
+            });
+        }
+
+        if (Schema::hasColumn('certificates', 'issued_at')) {
+            Schema::table('certificates', function (Blueprint $table) {
+                $table->dropColumn('issued_at');
+            });
+        }
+
+        if (Schema::hasColumn('certificates', 'qr_code_path')) {
+            Schema::table('certificates', function (Blueprint $table) {
+                $table->dropColumn('qr_code_path');
+            });
+        }
     }
 };
