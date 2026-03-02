@@ -64,14 +64,35 @@ return new class extends Migration
         }
 
         Schema::table('quizzes', function (Blueprint $table) {
-            $table->foreignId('course_id')->nullable()->after('module_id')->constrained('courses')->nullOnDelete();
+            $table->foreignId('course_id')->nullable()->constrained('courses')->nullOnDelete();
         });
 
-        DB::table('quizzes')
+        $quizRows = DB::table('quizzes')
             ->whereNotNull('module_id')
-            ->update([
-                'course_id' => DB::raw('(SELECT course_id FROM modules WHERE modules.id = quizzes.module_id)'),
-            ]);
+            ->select('id', 'module_id')
+            ->get();
+
+        if ($quizRows->isEmpty()) {
+            return;
+        }
+
+        $moduleIds = $quizRows->pluck('module_id')->unique()->values();
+
+        $courseByModule = DB::table('modules')
+            ->whereIn('id', $moduleIds)
+            ->pluck('course_id', 'id');
+
+        foreach ($quizRows as $quizRow) {
+            $courseId = $courseByModule[$quizRow->module_id] ?? null;
+
+            if (! $courseId) {
+                continue;
+            }
+
+            DB::table('quizzes')
+                ->where('id', $quizRow->id)
+                ->update(['course_id' => $courseId]);
+        }
     }
 
     public function down(): void
