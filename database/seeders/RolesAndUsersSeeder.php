@@ -20,7 +20,7 @@ class RolesAndUsersSeeder extends Seeder
         $apprenantRole = \App\Models\Role::firstOrCreate(['name' => 'apprenant']);
         $institutionRole = \App\Models\Role::firstOrCreate(['name' => 'institution']);
 
-        \App\Models\User::firstOrCreate([
+        \App\Models\User::updateOrCreate([
             'email' => 'admin@sanabot.com',
         ], [
             'name' => 'Admin Principal',
@@ -30,23 +30,25 @@ class RolesAndUsersSeeder extends Seeder
             'approval_status' => 'approved',
         ]);
 
-        \App\Models\User::firstOrCreate([
+        \App\Models\User::updateOrCreate([
             'email' => 'formateur@sanabot.com',
         ], [
             'name' => 'Formateur Expert',
             'password' => bcrypt('formateur1234'),
             'role_id' => $formateurRole->id,
+            'approval_status' => 'approved',
         ]);
 
-        \App\Models\User::firstOrCreate([
+        \App\Models\User::updateOrCreate([
             'email' => 'apprenant@sanabot.com',
         ], [
             'name' => 'Apprenant Test',
             'password' => bcrypt('apprenant1234'),
             'role_id' => $apprenantRole->id,
+            'approval_status' => 'approved',
         ]);
 
-        $institutionUser = User::firstOrCreate([
+        $institutionUser = User::updateOrCreate([
             'email' => 'institution@sanabot.com',
         ], [
             'name' => 'Institution Demo',

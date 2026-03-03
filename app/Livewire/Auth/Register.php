@@ -43,7 +43,7 @@ class Register extends Component
         $this->country = trim($this->country);
         $this->address = trim($this->address);
 
-        $allowedRoleIds = Role::whereIn('name', ['apprenant', 'formateur', 'institution'])
+        $allowedRoleIds = Role::query()
             ->pluck('id')
             ->all();
 
@@ -116,7 +116,7 @@ class Register extends Component
 
     public function render()
     {
-        $roles = Role::whereIn('name', ['apprenant', 'formateur', 'institution'])->orderBy('name')->get();
+        $roles = Role::query()->orderBy('name')->get();
         return view('components.auth.register', compact('roles'));
     }
 }
