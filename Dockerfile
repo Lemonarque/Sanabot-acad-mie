@@ -38,4 +38,4 @@ RUN npm run build
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache; touch storage/logs/laravel.log; case \"${APP_KEY:-}\" in base64:*) ;; *) export APP_KEY=\"base64:$(php -r 'echo base64_encode(random_bytes(32));')\" ;; esac; php artisan package:discover --ansi; php artisan storage:link || true; php artisan migrate --force; php artisan db:seed --class=Database\\Seeders\\RolesAndUsersSeeder --force; php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
+CMD ["sh", "-c", "mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache; touch storage/logs/laravel.log; case \"${APP_KEY:-}\" in base64:*) ;; *) export APP_KEY=\"base64:$(php -r 'echo base64_encode(random_bytes(32));')\" ;; esac; php artisan package:discover --ansi; php artisan storage:link || true; php artisan migrate --force; php scripts/ensure_admin.php; php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
