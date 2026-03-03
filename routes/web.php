@@ -39,7 +39,9 @@ use App\Models\Quiz;
 use App\Models\Course;
 
 // Page d'accueil
-Route::get('/', function () {
+Route::redirect('/', '/home');
+
+Route::get('/home', function () {
     return rescue(
         fn () => view('welcome', [
             'carouselCourses' => Course::query()
