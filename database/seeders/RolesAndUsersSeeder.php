@@ -26,6 +26,8 @@ class RolesAndUsersSeeder extends Seeder
             'name' => 'Admin Principal',
             'password' => bcrypt('admin1234'),
             'role_id' => $adminRole->id,
+            'admin_level' => 'super_admin',
+            'approval_status' => 'approved',
         ]);
 
         \App\Models\User::firstOrCreate([
