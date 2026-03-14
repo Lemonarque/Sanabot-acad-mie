@@ -157,7 +157,28 @@ class Builder extends Component
 
         $legacyImagePath = $this->course?->presentation_image;
         if ($this->courseImageFile) {
-            $legacyImagePath = $this->courseImageFile->store('course-images', 'public');
+            try {
+                $uploadedImagePath = $this->courseImageFile->store('course-images', 'public');
+            } catch (\Throwable $exception) {
+                report($exception);
+                $this->addError('courseImageFile', 'Impossible d\'enregistrer l\'image sur le serveur. Vérifiez la configuration du stockage (dossier storage/app/public et lien public/storage).');
+
+                return;
+            }
+
+            if (! is_string($uploadedImagePath) || trim($uploadedImagePath) === '') {
+                $this->addError('courseImageFile', 'L\'image n\'a pas pu être enregistrée. Vérifiez les permissions d\'écriture du stockage serveur.');
+
+                return;
+            }
+
+            if (! Storage::disk('public')->exists($uploadedImagePath)) {
+                $this->addError('courseImageFile', 'L\'image a été reçue mais reste introuvable sur le disque public. Vérifiez le disque FILESYSTEM et les permissions du dossier storage.');
+
+                return;
+            }
+
+            $legacyImagePath = $uploadedImagePath;
             $this->courseImagePath = $legacyImagePath;
 
             if (

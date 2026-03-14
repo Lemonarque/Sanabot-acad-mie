@@ -34,6 +34,7 @@ use App\Livewire\Modules\Show as ModulesShow;
 use App\Livewire\Payment\Checkout as PaymentCheckout;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CourseImageController;
+use App\Http\Controllers\StorageHealthController;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quiz;
@@ -110,6 +111,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/payments', AdminPaymentsManage::class)->name('admin.payments.manage');
     Route::get('/certificates', AdminCertificatesManage::class)->name('admin.certificates.manage');
     Route::get('/institutions', AdminInstitutionsManage::class)->name('admin.institutions.manage');
+    Route::get('/diagnostic/storage', StorageHealthController::class)->name('admin.storage.health');
 });
 
 Route::middleware(['auth', 'role:institution'])->prefix('institution')->group(function () {

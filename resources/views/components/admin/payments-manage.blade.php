@@ -43,11 +43,11 @@
                                         @php
                                             $courseName = $payment->course?->title ?? $payment->module?->course?->title ?? '—';
                                             $statusBadge = match($payment->status) {
-                                                'completed' => ['bg' => 'rgba(16, 185, 129, 0.15)', 'color' => '#10b981', 'label' => '✓ Payé', 'icon' => '✓'],
-                                                'pending' => ['bg' => 'rgba(251, 191, 36, 0.15)', 'color' => '#f59e0b', 'label' => '⏳ En attente', 'icon' => '⏳'],
-                                                'cancelled' => ['bg' => 'rgba(156, 163, 175, 0.15)', 'color' => '#6b7280', 'label' => '✕ Annulé', 'icon' => '✕'],
-                                                'failed' => ['bg' => 'rgba(239, 68, 68, 0.15)', 'color' => '#ef4444', 'label' => '✕ Échoué', 'icon' => '✕'],
-                                                default => ['bg' => 'rgba(156, 163, 175, 0.15)', 'color' => '#6b7280', 'label' => $payment->status, 'icon' => '•'],
+                                                'completed' => ['classes' => 'bg-emerald-100 text-emerald-600', 'label' => '✓ Payé', 'icon' => '✓'],
+                                                'pending' => ['classes' => 'bg-amber-100 text-amber-600', 'label' => '⏳ En attente', 'icon' => '⏳'],
+                                                'cancelled' => ['classes' => 'bg-slate-100 text-slate-500', 'label' => '✕ Annulé', 'icon' => '✕'],
+                                                'failed' => ['classes' => 'bg-red-100 text-red-600', 'label' => '✕ Échoué', 'icon' => '✕'],
+                                                default => ['classes' => 'bg-slate-100 text-slate-500', 'label' => $payment->status, 'icon' => '•'],
                                             };
                                             $methodIcon = match($payment->payment_method) {
                                                 'mobile_money' => '📱',
@@ -73,7 +73,7 @@
                                                 @endif
                                             </td>
                                             <td class="py-4">
-                                                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold" style="background: {{ $statusBadge['bg'] }}; color: {{ $statusBadge['color'] }};">
+                                                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold {{ $statusBadge['classes'] }}">
                                                     <span>{{ $statusBadge['icon'] }}</span>
                                                     <span>{{ $statusBadge['label'] }}</span>
                                                 </span>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
@@ -43,6 +44,10 @@ class Course extends Model implements HasMedia
     {
         if (! $this->exists) {
             return null;
+        }
+
+        if (Route::has('courses.image')) {
+            return route('courses.image', ['course' => $this]);
         }
 
         if (! empty($this->presentation_image)) {

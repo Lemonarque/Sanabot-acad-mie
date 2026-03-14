@@ -120,8 +120,10 @@ class InstitutionsManage extends Component
             return;
         }
 
+        $approvedPriceValue = number_format($approvedPrice, 2, '.', '');
+
         $request->status = 'approved';
-        $request->approved_price = $approvedPrice;
+        $request->approved_price = $approvedPriceValue;
         $request->reviewed_by = Auth::id();
         $request->reviewed_at = now();
         $request->save();
@@ -131,7 +133,7 @@ class InstitutionsManage extends Component
             'course_id' => $request->course_id,
         ], [
             'is_enabled' => true,
-            'adjusted_price' => $approvedPrice,
+            'adjusted_price' => $approvedPriceValue,
         ]);
 
         unset($this->approvalPrices[$requestId]);

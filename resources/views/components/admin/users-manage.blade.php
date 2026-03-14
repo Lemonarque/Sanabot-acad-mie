@@ -63,13 +63,13 @@
                                                 @if($user->role?->name === 'admin' && $user->admin_level)
                                                     @php
                                                         $levelBadge = match($user->admin_level) {
-                                                            'super_admin' => ['bg' => 'rgba(239, 68, 68, 0.15)', 'color' => '#dc2626', 'label' => '⭐ Super Admin', 'icon' => '👑'],
-                                                            'admin' => ['bg' => 'rgba(59, 130, 246, 0.15)', 'color' => '#3b82f6', 'label' => 'Admin', 'icon' => '🔑'],
-                                                            'moderator' => ['bg' => 'rgba(168, 85, 247, 0.15)', 'color' => '#a855f7', 'label' => 'Modérateur', 'icon' => '🛡️'],
-                                                            default => ['bg' => 'rgba(156, 163, 175, 0.15)', 'color' => '#6b7280', 'label' => 'Admin', 'icon' => '⚙️'],
+                                                            'super_admin' => ['classes' => 'bg-red-100 text-red-600', 'label' => '⭐ Super Admin', 'icon' => '👑'],
+                                                            'admin' => ['classes' => 'bg-blue-100 text-blue-500', 'label' => 'Admin', 'icon' => '🔑'],
+                                                            'moderator' => ['classes' => 'bg-purple-100 text-purple-500', 'label' => 'Modérateur', 'icon' => '🛡️'],
+                                                            default => ['classes' => 'bg-slate-100 text-slate-500', 'label' => 'Admin', 'icon' => '⚙️'],
                                                         };
                                                     @endphp
-                                                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold" style="background: {{ $levelBadge['bg'] }}; color: {{ $levelBadge['color'] }};">
+                                                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold {{ $levelBadge['classes'] }}">
                                                         <span>{{ $levelBadge['icon'] }}</span>
                                                         <span>{{ $levelBadge['label'] }}</span>
                                                     </span>
@@ -80,12 +80,12 @@
                                             <td class="py-4">
                                                 @php
                                                     $badge = match($user->approval_status) {
-                                                        'approved' => ['bg' => 'rgba(123, 191, 100, 0.18)', 'color' => 'var(--mint)', 'label' => 'Valide'],
-                                                        'rejected' => ['bg' => 'rgba(240, 142, 163, 0.18)', 'color' => 'var(--rose)', 'label' => 'Refuse'],
-                                                        default => ['bg' => 'rgba(244, 197, 94, 0.18)', 'color' => 'var(--amber)', 'label' => 'En attente'],
+                                                        'approved' => ['classes' => 'bg-emerald-100 text-emerald-600', 'label' => 'Valide'],
+                                                        'rejected' => ['classes' => 'bg-rose-100 text-rose-500', 'label' => 'Refuse'],
+                                                        default => ['classes' => 'bg-amber-100 text-amber-600', 'label' => 'En attente'],
                                                     };
                                                 @endphp
-                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold" style="background: {{ $badge['bg'] }}; color: {{ $badge['color'] }};">
+                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold {{ $badge['classes'] }}">
                                                     {{ $badge['label'] }}
                                                 </span>
                                             </td>

@@ -91,7 +91,7 @@ class Editor extends Component
         }
 
         $path = $this->video_file->store('videos', 'public');
-        return Storage::disk('public')->url($path);
+        return Storage::url($path);
     }
 
     public function save()

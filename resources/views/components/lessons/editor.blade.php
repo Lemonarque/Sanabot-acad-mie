@@ -133,7 +133,6 @@
                     if (hiddenInput) {
                         hiddenInput.value = content;
                     }
-                    @this.set('content', content, false);
                 });
             },
             init_instance_callback: function(editor) {

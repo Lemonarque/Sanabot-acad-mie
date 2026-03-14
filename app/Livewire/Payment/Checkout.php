@@ -5,7 +5,9 @@ namespace App\Livewire\Payment;
 use App\Models\Course;
 use App\Models\InstitutionCourseAccess;
 use App\Models\Payment;
+use App\Models\User;
 use Livewire\Component;
+use Livewire\Attributes\Layout;
 use FedaPay\FedaPay;
 use FedaPay\Transaction;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +26,7 @@ class Checkout extends Component
     {
         $user = Auth::user();
 
-        if (! $user) {
+        if (! $user instanceof User) {
             abort(403);
         }
 
@@ -126,9 +128,9 @@ class Checkout extends Component
         }
     }
 
+    #[Layout('components.layouts.app')]
     public function render()
     {
-        return view('livewire.payment.checkout')
-            ->layout('components.layouts.app');
+        return view('livewire.payment.checkout');
     }
 }
